@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections>
+      <section name="static_parameters" type="DealerTrack.CommonObjects.CustomItemHandler.MyConfig.MyConfigSectionHandler,DealerTrack.CommonObjects.CustomItemHandler"/>
+    <section name="oracle.manageddataaccess.client"
+      type="OracleInternal.Common.ODPMSectionHandler, Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342"/>
+    </configSections>
+  <appSettings>
+    <!-- <add key="DealerTrack.Common.WhereToLog" value="queue"/> -->
+    <!-- queue or textfile -->
+    <!-- <add key="DealerTrack.Common.LogQueueName" value="PlatformAdminLogs"/>-->
+    <!-- <add key="DealerTrack.Common.LogTextFolderName" value="D:\Logs\Adminlogs\"/>-->
+    <!-- <add key="DealerTrack.Common.LogMessageType" value="recoverablemessage"/>-->
+  </appSettings>
+  <system.web>
+    <compilation debug="true"/>
+    <httpHandlers>
+      <clear/>
+      <add verb="*" path="*.aspx" type="System.Web.UI.PageHandlerFactory"/>
+    </httpHandlers>
+    <httpRuntime requestValidationMode="2.0" />
+  </system.web>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <probing privatePath="bin\CommonObjects\v3.93"/>
+      <dependentAssembly>
+        <publisherPolicy apply="no"/>
+        <assemblyIdentity name="Oracle.ManagedDataAccess" publicKeyToken="89b483f429c47342" culture="neutral"/>
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <static_parameters>
+    <setting environment="dev">
+      <CommonLoginRail>
+        <!--Node to turn on/off Common Login Rail feature to read/write data to common login rail table.
+                 If isLoginRailTransition is "N", login rail service will not be called.
+                 If isLoginRailTransition is "YB", login rail service will be called and we will write to both new and old tables
+                 If isLoginRailTransition is "YBR", login rail service will be called and we will write to both tables, but read from new table ONLY        
+                 If isLoginRailTransition is "YRW", login rail service will be called and we will stop writing to old tables and read /write from new table
+                 Possible Combination of values are �N� �YB�, �YBR�, �YRW� (case sensitive)-->
+        <isLoginRailTransition>YBR</isLoginRailTransition>
+        <!--URL for Common Login Rail service-->
+        <url_LoginRailService>http://soa.dev.dealertrack.com:5055/LoginRail/User.svc/</url_LoginRailService>
+      </CommonLoginRail>
+      <secureKey>hackath0n</secureKey>
+      <connectionKey>DTC</connectionKey>
+      <defaultTitle>C3</defaultTitle>
+      <url_PLI>/public/PLI/ProblemsMainEntry.aspx</url_PLI>
+      <!--<FusionProdCdUrl>https://login.dev.dealertrack.com/login/</FusionProdCdUrl>-->
+    </setting>
+    <setting environment="qa">
+      <CommonLoginRail>
+        <isLoginRailTransition>YB</isLoginRailTransition>
+        <!--URL for Common Login Rail service-->
+        <url_LoginRailService>http://10.133.13.208:5055/LoginRail/User.svc/</url_LoginRailService>
+      </CommonLoginRail>
+      <secureKey>1nnov@tion2016</secureKey>
+      <connectionKey>DTC</connectionKey>
+      <defaultTitle>C3</defaultTitle>&gt;
+      <url_PLI>/public/PLI/ProblemsMainEntry.aspx</url_PLI>
+      <!--<FusionProdCdUrl>https://login-qa.dealertrack.com/login/</FusionProdCdUrl>-->
+    </setting>
+    <setting environment="prod">
+      <CommonLoginRail>
+        <isLoginRailTransition>YB</isLoginRailTransition>
+        <!--URL for Common Login Rail service-->
+        <url_LoginRailService>http://soa:5055/LoginRail/User.svc/</url_LoginRailService>
+      </CommonLoginRail>
+      <secureKey>1ntegr@tion2016</secureKey>
+      <connectionKey>DTC</connectionKey>
+      <defaultTitle>C3</defaultTitle>
+      <url_PLI>/public/PLI/ProblemsMainEntry.aspx</url_PLI>
+      <!--<FusionProdCdUrl>https://login.dealertrack.com/login/</FusionProdCdUrl>-->
+    </setting>
+  </static_parameters>
+  <system.data>
+    <DbProviderFactories>
+      <remove invariant="Oracle.ManagedDataAccess.Client"/>
+      <add name="ODP.NET, Managed Driver" invariant="Oracle.ManagedDataAccess.Client" description="Oracle Data Provider for .NET, Managed Driver"
+        type="Oracle.ManagedDataAccess.Client.OracleClientFactory, Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342"/>
+    </DbProviderFactories>
+  </system.data>
+  <oracle.manageddataaccess.client>
+    <version number="*">
+      <dataSources>
+        <dataSource alias="SampleDataSource" descriptor="(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL))) "/>
+      </dataSources>
+    </version>
+  </oracle.manageddataaccess.client>
+</configuration>

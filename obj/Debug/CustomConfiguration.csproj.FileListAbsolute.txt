@@ -1,0 +1,4 @@
+C:\Programming\githowie\MSNET\CustomConfiguration\bin\CustomConfiguration.dll
+C:\Programming\githowie\MSNET\CustomConfiguration\bin\CustomConfiguration.pdb
+C:\Programming\githowie\MSNET\CustomConfiguration\obj\Debug\CustomConfiguration.dll
+C:\Programming\githowie\MSNET\CustomConfiguration\obj\Debug\CustomConfiguration.pdb
